@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description" content="ShareLock: An ultra-lightweight CLIP-like vision-language model that achieves competitive multimodal performance with minimal computational resources.">
+  <meta property="og:title" content="ShareLock: Ultra-Lightweight CLIP-like Vision-Language Model"/>
+  <meta property="og:description" content="An efficient approach to vision-language modeling, achieving state-of-the-art results in low-data regimes with minimal computational cost."/>
+  <meta property="og:url" content="https://jonaruthardt.github.io/projects/ShareLock"/>
+  <!-- TODO Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+  <meta property="og:image" content="static/images/ShareLock.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+  <meta name="twitter:title" content="ShareLock: Ultra-Lightweight CLIP-like Vision-Language Model">
+  <meta name="twitter:description" content="Efficient vision-language modeling with ShareLock. Competitive performance, minimal cost.">
+  <meta name="twitter:image" content="static/images/ShareLock-Twitter.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="keywords" content="vision-language model, ShareLock, CLIP, machine learning, multimodal AI">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <title>ShareLock: Ultra-Lightweight CLIP-like Vision-Language Model</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵🏼‍♂️</text></svg>">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+<body>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">🕵🏼‍♂️ ShareLock: An Ultra-Lightweight CLIP-like Vision-Language Model</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="https://jonaruthardt.github.io" target="_blank">Jona Ruthardt</a><sup>1</sup>,</span>
+                <span class="author-block">
+                  <a href="https://gertjanburghouts.github.io" target="_blank">Gertjan J. Burghouts</a><sup>2</sup>,</span>
+                  <span class="author-block">
+                    <a href="https://sergebelongie.github.io" target="_blank">Serge Belongie</a><sup>3</sup>,</span>
+                    <span class="author-block">
+                      <a href="https://yukimasano.github.io" target="_blank">Yuki M. Asano</a><sup>1</sup>
+                    </span>
+                  </span>
+                  </div>
+
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block">
+                      <sup>1</sup>FunAI Lab, University of Technology Nuremberg<br>
+                      <sup>2</sup>Intelligent Imaging, TNO<br>
+                      <sup>3</sup>Department of Computer Science, University of Copenhagen<br>
+                    </span>
+                  </div>
+
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                         <!-- Arxiv PDF link -->
+                      <span class="link-block">
+                        <a href="https://arxiv.org/pdf/2410.07173.pdf" target="_blank"
+                        class="external-link button is-normal is-rounded is-dark">
+                        <span class="icon">
+                          <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>Paper</span>
+                      </a>
+                    </span>
+
+                    <!-- Supplementary PDF link -->
+                    <!-- <span class="link-block">
+                      <a href="static/pdfs/supplementary_material.pdf" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Supplementary</span>
+                    </a>
+                  </span> -->
+
+                  <!-- Github link -->
+                  <span class="link-block">
+                    <a href="https://github.com/JonaRuthardt/ShareLock" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <!-- ArXiv abstract Link -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/pdf/2410.07173" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TL;DR Section -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">TL;DR</h2>
+        <div class="content has-text-justified">
+          <p>
+            <b>ShareLock</b> is an ultra-lightweight vision-language model that achieves competitive multimodal performance by leveraging frozen features from state-of-the-art unimodal models. Trained on just 563k image-caption pairs, it achieves <b>51% zero-shot accuracy on ImageNet</b> and outperforms existing methods in low-data regimes, with a total training time of <b>1 GPU hour</b>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Model Architecture Section -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Model Architecture</h2>
+        <figure class="has-text-centered">
+          <img src="static/images/Diagram ShareLock.png" alt="Model Architecture Diagram" style="max-width: 100%; height: auto;">
+          <figcaption>Figure 1: Diagram of the ShareLock model architecture</figcaption>
+        </figure>
+        <br>
+        <div class="content has-text-justified">
+          <p>
+            ShareLock adopts a modular design that combines frozen vision and language models to extract high-quality unimodal features. These features are then aligned in a shared embedding space through a lightweight, learnable projection head. The projection network on top of the frozen langauge representations is optimized using a contrastive loss, ensuring that image-text pairs are effectively matched in the latent space. This architecture allows efficient training on limited data while maintaining competitive performance.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Result image carousel -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Results</h2>
+      <div id="results-carousel" class="carousel results-carousel">
+       <div class="item">
+        <!-- Your image here -->
+        <img src="static/images/imagenet.jpg" alt="Results of Frozen CLIP-like zero-shot classification on ImageNet variants." style="max-width: 100%; height: auto;">
+        <h2 class="subtitle has-text-centered">
+          Table 1: <b>Frozen CLIP-like zero-shot classification on ImageNet variants.</b> ShareLock outperforms CLIP, LiT and ASIF baselines across 21/24 ImageNet evaluations and achieves performances competitive with models that utilize significantly more paired data, such as CommonPool-L (384M).
+        </h2>
+      </div>
+      <div class="item">
+        <!-- Your image here -->
+        <img src="static/images/fine-grained.jpg" alt="Results of zero-shot classification on various datasets." style="max-width: 100%; height: auto;">
+        <h2 class="subtitle has-text-centered">
+          Table 2: <b>Zero-shot classification on various datasets.</b> Fine-grained benefit from large-scale data; still, ShareLock performs competitively with other models trained on the same data.
+        </h2>
+      </div>
+      <div class="item">
+        <!-- Your image here -->
+        <img src="static/images/multilingual.jpg" alt="Results of multi-Lingual Zero-shot Classification." style="max-width: 100%; height: auto;">
+        <h2 class="subtitle has-text-centered">
+          Table 3: <b>Multi-Lingual Zero-shot Classification.</b> Leveraging extensive pretraining and consistent representations, ShareLock allows cross-lingual transfer on ImageNet without extra alignment.
+       </h2>
+     </div>
+     <div class="item">
+      <!-- Your image here -->
+      <img src="static/images/compositionality.jpg" alt="Results of compositional reasoning on Winoground." style="max-width: 100%; height: auto;">
+      <h2 class="subtitle has-text-centered">
+        Table 4: <b>Compositional reasoning on Winoground.</b> Strong frozen language features alone do not address the shortcomings inherent to prior CLIP-like models when it comes to spacial or conceptual relationships.
+      </h2>
+    </div>
+  </div>
+</div>
+</section>
+<!-- End image carousel -->
+
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-justified">
+          <p>
+            Compared to prior CLIP-like models, ShareLock clearly exhibits more favorable properties in highly data-constrained training regimes, as depicted in below Figure. When training from scratch, vanilla CLIP models require orders of magnitude more data to achieve similar performance. Additionally, ShareLock shares similar improvment trajectories, suggesting comparable scaling characteristics and the ability to capitalize on the availability of larger datasets. These findings underline the effectiveness of utilizing features of state-of-the-art unimodal models in a multimodal setting.
+          </p>
+        </div>
+        <figure class="has-text-centered">
+          <img src="static/images/scaling_laws_dataset_size.png" alt="Scaling Laws Diagram" style="max-width: 100%; height: auto;">
+          <figcaption>Figure 2: Scaling laws of various CLIP-like models.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+
+        <h2 class="title">BibTeX</h2>
+        <pre><code>@article{ruthardt2024sharelock,
+      title={Do Better Language Models Have Crisper Vision?},
+      author={Jona Ruthardt, Gertjan J. Burghouts, Serge Belongie, Yuki M. Asano},
+      journal={arXiv preprint arXiv:2410.07173},
+      year={2024}
+    }</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container is-max-desktop">
+    <!-- <div class="columns is-centered"> -->
+      <!-- <div class="column is-four-fifths"> -->
+        <div class="content">
+
+          <p style="color: gray;">
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" style="color: gray;">Academic Project Page Template</a>.
+            <br> This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" style="color: gray;">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+        </div>
+      <!-- </div>
+    </div> -->
+  </div>
+</footer>
+
+</body>
+</html>
