@@ -39,6 +39,12 @@
 - title: Experience
   type: time_table
   contents:
+    - title: Graduate Research Intern
+      institution: Naver Labs Europe, Grenoble (FR)
+      year: 11/23-07/24
+      description:
+        - Research into improving multimodal large language models (MLLMs) for vision-centric applications
+        - Collaboration with Mert Bulent Sariyildiz and Yannis Kalantidis
     - title: Computer Vision Research Intern
       institution: TNO - Intelligent Imaging Group, The Hague (NL)
       year: 11/23-07/24
@@ -107,6 +113,9 @@
 - title: Past Grants and Funding
   type: time_table
   contents:
+    - year: 2025
+      items:
+        - EuroHPC Cluster Compute Grand (28k GPU Hours)
     - year: 2024
       items:
         - ELLIS MSc Honors Mobility Grant (4,000€)
@@ -114,6 +123,19 @@
       items: 
         - UvA MSc AI Conference Grant (500€)
         - UvA University Fund Travel Grant (800€)
+
+- title: Summer and Winter Schools
+  type: time_table
+  contents:
+    - title: PRAIRIE AI Summer School (PAISS-25)
+      institution:   Centre Inria de l’Université Grenoble Alpes, Grenoble (FR)
+      year: 09/25
+    - title: Foundation Model (FOMO-24) Winter School 
+      institution: University of Amsterdam, Amsterdam (NL)
+      year: 04/24
+    - title: IoT and AI Summer School
+      institution: Université Sorbonne Paris Nord, Paris (FR)
+      year: 07/23
 
 # - title: Academic Interests
 #   type: nested_list
