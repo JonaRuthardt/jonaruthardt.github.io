@@ -168,16 +168,75 @@
 <!-- Hero Figure -->
 <section class="section hero">
   <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-four-fifths">
-        <figure class="has-text-centered">
-          <img src="static/images/figure1.png" alt="SteerViT teaser figure" style="max-width: 100%; height: auto;">
-          <figcaption>
-            <b>Figure 1: Steerable Visual Representations.</b><br>
-            A standard vision encoder tends to represent the dominant concept in an image.
-            SteerViT instead lets language steer both global semantics and local attention toward the queried concept.
-          </figcaption>
-        </figure>
+    <div class="teaser-demo" id="teaser-figure-demo" data-default-scene="Street" data-default-prompt="car">
+      <div class="teaser-demo__controls">
+        <div class="teaser-demo__field">
+          <label class="teaser-demo__label" for="teaser-demo-scene-select">Base image</label>
+          <div class="select is-fullwidth is-rounded">
+            <select id="teaser-demo-scene-select"></select>
+          </div>
+        </div>
+        <div class="teaser-demo__field">
+          <label class="teaser-demo__label" for="teaser-demo-prompt-select">Text prompt</label>
+          <div class="select is-fullwidth is-rounded">
+            <select id="teaser-demo-prompt-select"></select>
+          </div>
+        </div>
+        <p class="teaser-demo__copy">
+          Compare vision encoders by the regions they attend to and the semantics captured by their global embeddings.
+        </p>
+      </div>
+
+      <div class="teaser-demo__grid">
+        <div class="teaser-demo__query-card">
+          <div class="teaser-demo__card-head">
+            <div>
+              <h3 class="teaser-demo__card-title">Query Image</h3>
+              <p class="teaser-demo__card-copy">The same input image is used for both models.</p>
+            </div>
+          </div>
+          <div class="teaser-demo__query-image-shell">
+            <img id="teaser-demo-original-image" alt="Original query image">
+          </div>
+        </div>
+
+        <div class="teaser-demo__model-card teaser-demo__model-card--dino">
+          <div class="teaser-demo__card-head">
+            <div>
+              <h3 class="teaser-demo__card-title">DINOv2</h3>
+              <p class="teaser-demo__card-copy">Query-agnostic baseline</p>
+            </div>
+          </div>
+          <div class="teaser-demo__heatmap-shell">
+            <img id="teaser-demo-dino-heatmap" alt="DINOv2 CLS attention heatmap">
+          </div>
+          <div class="teaser-demo__retrieval-label">Top-4 retrievals</div>
+          <div class="teaser-demo__retrieval-grid">
+            <img id="teaser-demo-dino-ret-1" alt="DINOv2 retrieval 1">
+            <img id="teaser-demo-dino-ret-2" alt="DINOv2 retrieval 2">
+            <img id="teaser-demo-dino-ret-3" alt="DINOv2 retrieval 3">
+            <img id="teaser-demo-dino-ret-4" alt="DINOv2 retrieval 4">
+          </div>
+        </div>
+
+        <div class="teaser-demo__model-card teaser-demo__model-card--steer">
+          <div class="teaser-demo__card-head">
+            <div>
+              <h3 class="teaser-demo__card-title">SteerViT</h3>
+              <p class="teaser-demo__card-copy">Prompt-steerable visual encoder</p>
+            </div>
+          </div>
+          <div class="teaser-demo__heatmap-shell">
+            <img id="teaser-demo-steer-heatmap" alt="SteerViT CLS attention heatmap">
+          </div>
+          <div class="teaser-demo__retrieval-label">Top-4 retrievals</div>
+          <div class="teaser-demo__retrieval-grid">
+            <img id="teaser-demo-steer-ret-1" alt="SteerViT retrieval 1">
+            <img id="teaser-demo-steer-ret-2" alt="SteerViT retrieval 2">
+            <img id="teaser-demo-steer-ret-3" alt="SteerViT retrieval 3">
+            <img id="teaser-demo-steer-ret-4" alt="SteerViT retrieval 4">
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -450,7 +509,7 @@
   <div class="container is-max-desktop">
     <div class="columns is-vcentered is-variable is-6">
       <div class="column is-half">
-        <div class="steer-demo" id="steer-knob-demo">
+        <div class="steer-demo" id="steer-knob-demo" data-default-scene="Street" data-default-prompt="car">
           <div class="steer-demo__controls">
             <div class="steer-demo__field">
               <label class="steer-demo__label" for="steer-demo-base-select">Base image</label>

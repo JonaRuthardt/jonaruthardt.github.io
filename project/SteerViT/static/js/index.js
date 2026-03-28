@@ -1,5 +1,148 @@
 window.HELP_IMPROVE_VIDEOJS = false;
 
+function initTeaserFigureDemo() {
+    var root = document.getElementById('teaser-figure-demo');
+    if (!root) {
+        return;
+    }
+
+    var sceneSelect = document.getElementById('teaser-demo-scene-select');
+    var promptSelect = document.getElementById('teaser-demo-prompt-select');
+    var originalImage = document.getElementById('teaser-demo-original-image');
+    var dinoHeatmap = document.getElementById('teaser-demo-dino-heatmap');
+    var steerHeatmap = document.getElementById('teaser-demo-steer-heatmap');
+    var dinoRetrievals = [
+        document.getElementById('teaser-demo-dino-ret-1'),
+        document.getElementById('teaser-demo-dino-ret-2'),
+        document.getElementById('teaser-demo-dino-ret-3'),
+        document.getElementById('teaser-demo-dino-ret-4')
+    ];
+    var steerRetrievals = [
+        document.getElementById('teaser-demo-steer-ret-1'),
+        document.getElementById('teaser-demo-steer-ret-2'),
+        document.getElementById('teaser-demo-steer-ret-3'),
+        document.getElementById('teaser-demo-steer-ret-4')
+    ];
+
+    var teaserConfig = [
+        {
+            id: 'Kitchen',
+            label: 'Kitchen',
+            prompts: [
+                { id: 'curtain', label: 'curtain' },
+                { id: 'lamp', label: 'lamp' },
+                { id: 'pan', label: 'pan' }
+            ]
+        },
+        {
+            id: 'Room',
+            label: 'Room',
+            prompts: [
+                { id: 'cat', label: 'cat' },
+                { id: 'remote_control', label: 'remote control' },
+                { id: 'shelf_full_of_books', label: 'shelf full of books' }
+            ]
+        },
+        {
+            id: 'Skiing',
+            label: 'Skiing',
+            prompts: [
+                { id: 'left_person', label: 'left person' },
+                { id: 'mountains', label: 'mountains' },
+                { id: 'snowboard', label: 'snowboard' }
+            ]
+        },
+        {
+            id: 'Street',
+            label: 'Street',
+            prompts: [
+                { id: 'car', label: 'car' },
+                { id: 'orange', label: 'orange' },
+                { id: 'tree', label: 'tree' }
+            ]
+        }
+    ];
+
+    function createOption(item) {
+        var option = document.createElement('option');
+        option.value = item.id;
+        option.textContent = item.label;
+        return option;
+    }
+
+    function getSelectedScene() {
+        return teaserConfig.find(function(item) {
+            return item.id === sceneSelect.value;
+        }) || teaserConfig[0];
+    }
+
+    function getSelectedPrompt() {
+        return getSelectedScene().prompts.find(function(item) {
+            return item.id === promptSelect.value;
+        }) || getSelectedScene().prompts[0];
+    }
+
+    function populatePromptOptions(scene, selectedPromptId) {
+        promptSelect.innerHTML = '';
+        scene.prompts.forEach(function(prompt) {
+            promptSelect.appendChild(createOption(prompt));
+        });
+
+        var fallbackPrompt = selectedPromptId || scene.prompts[0].id;
+        var matchingPrompt = scene.prompts.find(function(prompt) {
+            return prompt.id === fallbackPrompt;
+        });
+        promptSelect.value = matchingPrompt ? matchingPrompt.id : scene.prompts[0].id;
+    }
+
+    function updateRetrievals(elements, prefix, labelPrefix) {
+        elements.forEach(function(element, index) {
+            var rank = index + 1;
+            element.src = prefix + rank + '.jpg';
+            element.alt = labelPrefix + ' retrieval ' + rank;
+        });
+    }
+
+    function updateDemo() {
+        var scene = getSelectedScene();
+        var prompt = getSelectedPrompt();
+        var basePath = 'static/demo/teaser_figure/' + scene.id + '/';
+        var dinoPath = basePath + 'DINOv2/';
+        var steerPath = basePath + prompt.id + '/';
+
+        originalImage.src = basePath + 'original.jpg';
+        originalImage.alt = scene.label + ' query image';
+
+        dinoHeatmap.src = dinoPath + 'heatmap.png';
+        dinoHeatmap.alt = 'DINOv2 heatmap for ' + scene.label;
+        updateRetrievals(dinoRetrievals, dinoPath, 'DINOv2');
+
+        steerHeatmap.src = steerPath + 'heatmap.png';
+        steerHeatmap.alt = 'SteerViT heatmap for prompt ' + prompt.label + ' in ' + scene.label;
+        updateRetrievals(steerRetrievals, steerPath, 'SteerViT');
+    }
+
+    teaserConfig.forEach(function(scene) {
+        sceneSelect.appendChild(createOption(scene));
+    });
+
+    sceneSelect.addEventListener('change', function() {
+        populatePromptOptions(getSelectedScene());
+        updateDemo();
+    });
+    promptSelect.addEventListener('change', updateDemo);
+
+    var defaultSceneId = root.dataset.defaultScene || teaserConfig[0].id;
+    var defaultScene = teaserConfig.find(function(scene) {
+        return scene.id === defaultSceneId;
+    }) || teaserConfig[0];
+    var defaultPromptId = root.dataset.defaultPrompt || defaultScene.prompts[0].id;
+
+    sceneSelect.value = defaultScene.id;
+    populatePromptOptions(defaultScene, defaultPromptId);
+    updateDemo();
+}
+
 function initSteerabilityDemo() {
     var root = document.getElementById('steer-knob-demo');
     if (!root) {
@@ -129,8 +272,14 @@ function initSteerabilityDemo() {
         populatePromptOptions(getSelectedBase());
         updateDemo();
     });
-    baseSelect.value = demoConfig.baseImages[0].id;
-    populatePromptOptions(getSelectedBase());
+    var defaultSceneId = root.dataset.defaultScene || demoConfig.baseImages[0].id;
+    var defaultScene = demoConfig.baseImages.find(function(scene) {
+        return scene.id === defaultSceneId;
+    }) || demoConfig.baseImages[0];
+    var defaultPromptId = root.dataset.defaultPrompt || defaultScene.prompts[0].id;
+
+    baseSelect.value = defaultScene.id;
+    populatePromptOptions(defaultScene, defaultPromptId);
 
     promptSelect.addEventListener('change', updateDemo);
     slider.addEventListener('input', updateDemo);
@@ -392,6 +541,7 @@ $(document).ready(function() {
     var carousels = bulmaCarousel.attach('.carousel', options);
 		
     bulmaSlider.attach();
+    initTeaserFigureDemo();
     initSteerabilityDemo();
     initEmbeddingSpaceDemo();
 
