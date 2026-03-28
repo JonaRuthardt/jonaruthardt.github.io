@@ -371,39 +371,42 @@
 <!-- Granularity Section -->
 <section class="section hero">
   <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3 has-text-centered">Text Controls Semantic Granularity</h2>
+    <h2 class="title is-3 has-text-centered">Text Controls Semantic Granularity</h2>
+    <div class="columns is-vcentered is-variable is-6">
+      <div class="column is-half">
+        <div class="embedding-demo" id="embedding-space-demo" style="margin-top: 0;">
+          <div class="embedding-demo__toolbar">
+            <div class="embedding-demo__field">
+              <label class="embedding-demo__label" for="embedding-space-prompt-select">Input prompt</label>
+              <div class="select is-fullwidth is-rounded">
+                <select id="embedding-space-prompt-select"></select>
+              </div>
+            </div>
+            <p class="embedding-demo__copy">
+              Changing the prompt smoothly reshapes the projected embedding space.
+            </p>
+          </div>
+
+          <div class="embedding-demo__canvas-shell">
+            <canvas id="embedding-space-canvas" aria-label="Interactive embedding space plot"></canvas>
+          </div>
+
+          <div class="embedding-demo__legend" id="embedding-space-legend"></div>
+        </div>
+      </div>
+
+      <div class="column is-half">
         <div class="content has-text-justified">
           <p>
-            SteerViT is not limited to choosing between different objects in a scene.
-            It can also use language to control <b>how detailed</b> the visual representation should be.
+            SteerViT does not just change what the model attends to. It also changes <b>how the visual embedding space is organized</b>.
           </p>
           <p>
-            On <b>PODS</b>, coarse prompts such as category names are often insufficient for fine-grained instance discrimination.
-            More descriptive prompts progressively improve performance, reaching <b>58.3% PR-AUC</b> and strong retrieval quality.
+            Broad prompts such as <b>"animal"</b> produce coarse semantic groupings, while more specific prompts such as <b>"bird"</b> sharpen the separation of individual concepts.
           </p>
           <p>
-            In other words, the prompt does not merely add extra information at the output level.
-            It actively reshapes the visual feature space to match the level of specificity described in language.
+            Text can even steer the space by <b>compositional attributes</b> rather than category. For example, prompting with <b>"eye"</b> groups together classes that share this property, even across semantic boundaries.
           </p>
         </div>
-
-        <figure class="has-text-centered">
-          <img src="static/images/pods_granularity.png" alt="Prompt specificity and PODS results" style="max-width: 100%; height: auto;">
-          <figcaption>
-            <b>Figure 7: Prompt specificity controls feature granularity.</b><br>
-            Detailed prompts produce more discriminative personalized visual representations.
-          </figcaption>
-        </figure>
-
-        <figure class="has-text-centered" style="margin-top: 2rem;">
-          <img src="static/images/embedding_topology.png" alt="Embedding topology steering" style="max-width: 100%; height: auto;">
-          <figcaption>
-            <b>Figure 8: Steering embedding topology via text.</b><br>
-            Prompts can reorganize the feature space by semantic hierarchy or even by compositional attributes such as “eye”.
-          </figcaption>
-        </figure>
       </div>
     </div>
   </div>

@@ -146,6 +146,236 @@ function initSteerabilityDemo() {
     updateDemo();
 }
 
+function initEmbeddingSpaceDemo() {
+    var root = document.getElementById('embedding-space-demo');
+    if (!root) {
+        return;
+    }
+
+    var promptSelect = document.getElementById('embedding-space-prompt-select');
+    var canvas = document.getElementById('embedding-space-canvas');
+    var legend = document.getElementById('embedding-space-legend');
+    var context = canvas.getContext('2d');
+
+    var animationFrameId = null;
+    var currentPoints = [];
+    var targetPointsByPrompt = {};
+    var prompts = [];
+    var bounds = {
+        minX: 0,
+        maxX: 1,
+        minY: 0,
+        maxY: 1
+    };
+
+    function createOption(value) {
+        var option = document.createElement('option');
+        option.value = value;
+        option.textContent = value;
+        return option;
+    }
+
+    function setCanvasSize() {
+        var rect = canvas.getBoundingClientRect();
+        var dpr = window.devicePixelRatio || 1;
+        canvas.width = Math.round(rect.width * dpr);
+        canvas.height = Math.round(rect.height * dpr);
+        context.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function easeInOutCubic(t) {
+        return t < 0.5
+            ? 4 * t * t * t
+            : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    function normalizePoint(point, width, height) {
+        var padding = { top: 28, right: 30, bottom: 28, left: 30 };
+        var usableWidth = width - padding.left - padding.right;
+        var usableHeight = height - padding.top - padding.bottom;
+        var normalizedX = (point.x - bounds.minX) / (bounds.maxX - bounds.minX || 1);
+        var normalizedY = (point.y - bounds.minY) / (bounds.maxY - bounds.minY || 1);
+
+        return {
+            x: padding.left + normalizedX * usableWidth,
+            y: height - padding.bottom - normalizedY * usableHeight
+        };
+    }
+
+    function drawBackdrop(width, height) {
+        context.clearRect(0, 0, width, height);
+        context.save();
+        context.strokeStyle = 'rgba(68, 96, 140, 0.10)';
+        context.lineWidth = 1;
+
+        for (var i = 1; i < 5; i += 1) {
+            var x = (width / 5) * i;
+            var y = (height / 5) * i;
+            context.beginPath();
+            context.moveTo(x, 18);
+            context.lineTo(x, height - 18);
+            context.stroke();
+            context.beginPath();
+            context.moveTo(18, y);
+            context.lineTo(width - 18, y);
+            context.stroke();
+        }
+
+        context.restore();
+    }
+
+    function render(points) {
+        var width = canvas.getBoundingClientRect().width;
+        var height = canvas.getBoundingClientRect().height;
+        drawBackdrop(width, height);
+
+        var emojiSize = Math.max(18, Math.min(30, width / 20));
+        context.save();
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.font = emojiSize + 'px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif';
+
+        points.forEach(function(point) {
+            var position = normalizePoint(point, width, height);
+            context.save();
+            context.shadowColor = 'rgba(17, 24, 39, 0.18)';
+            context.shadowBlur = 10;
+            context.fillText(point.emoji, position.x, position.y);
+            context.restore();
+        });
+
+        context.restore();
+    }
+
+    function animateToPrompt(prompt) {
+        var nextPoints = targetPointsByPrompt[prompt];
+        if (!nextPoints) {
+            return;
+        }
+
+        if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+        }
+
+        if (!currentPoints.length) {
+            currentPoints = nextPoints.map(function(point) {
+                return Object.assign({}, point);
+            });
+            render(currentPoints);
+            return;
+        }
+
+        var startPointsById = {};
+        currentPoints.forEach(function(point) {
+            startPointsById[point.id] = point;
+        });
+
+        var startTime = null;
+
+        function step(timestamp) {
+            if (!startTime) {
+                startTime = timestamp;
+            }
+
+            var progress = Math.min((timestamp - startTime) / 520, 1);
+            var easedProgress = easeInOutCubic(progress);
+
+            currentPoints = nextPoints.map(function(point) {
+                var startPoint = startPointsById[point.id] || point;
+                return {
+                    id: point.id,
+                    emoji: point.emoji,
+                    x: startPoint.x + (point.x - startPoint.x) * easedProgress,
+                    y: startPoint.y + (point.y - startPoint.y) * easedProgress
+                };
+            });
+
+            render(currentPoints);
+
+            if (progress < 1) {
+                animationFrameId = requestAnimationFrame(step);
+            }
+        }
+
+        animationFrameId = requestAnimationFrame(step);
+    }
+
+    function populateLegend(classOrder, emojiMap) {
+        legend.innerHTML = '';
+        classOrder.forEach(function(className) {
+            var item = document.createElement('div');
+            item.className = 'embedding-demo__legend-item';
+            item.innerHTML =
+                '<span class="embedding-demo__legend-emoji">' + (emojiMap[className] || '•') + '</span>' +
+                '<span>' + className.replace(/_/g, ' ') + '</span>';
+            legend.appendChild(item);
+        });
+    }
+
+    Promise.all([
+        fetch('static/demo/embedding_space/embedding_space.json').then(function(response) {
+            return response.json();
+        }),
+        fetch('static/demo/embedding_space/class2emoji.json').then(function(response) {
+            return response.json();
+        })
+    ]).then(function(results) {
+        var embeddingSpace = results[0];
+        var emojiMap = results[1];
+
+        prompts = Object.keys(embeddingSpace);
+        prompts.forEach(function(prompt) {
+            promptSelect.appendChild(createOption(prompt));
+        });
+
+        var classOrder = Object.keys(embeddingSpace[prompts[0]]);
+        populateLegend(classOrder, emojiMap);
+
+        prompts.forEach(function(prompt) {
+            var promptPoints = [];
+            Object.keys(embeddingSpace[prompt]).forEach(function(className) {
+                embeddingSpace[prompt][className].forEach(function(coordinates, index) {
+                    promptPoints.push({
+                        id: className + '-' + index,
+                        emoji: emojiMap[className] || '•',
+                        x: coordinates[0],
+                        y: coordinates[1]
+                    });
+
+                    bounds.minX = Math.min(bounds.minX, coordinates[0]);
+                    bounds.maxX = Math.max(bounds.maxX, coordinates[0]);
+                    bounds.minY = Math.min(bounds.minY, coordinates[1]);
+                    bounds.maxY = Math.max(bounds.maxY, coordinates[1]);
+                });
+            });
+
+            targetPointsByPrompt[prompt] = promptPoints;
+        });
+
+        var marginX = (bounds.maxX - bounds.minX) * 0.08;
+        var marginY = (bounds.maxY - bounds.minY) * 0.08;
+        bounds.minX -= marginX;
+        bounds.maxX += marginX;
+        bounds.minY -= marginY;
+        bounds.maxY += marginY;
+
+        setCanvasSize();
+        promptSelect.value = prompts[0];
+        animateToPrompt(prompts[0]);
+
+        promptSelect.addEventListener('change', function() {
+            animateToPrompt(promptSelect.value);
+        });
+
+        window.addEventListener('resize', function() {
+            setCanvasSize();
+            render(currentPoints);
+        });
+    }).catch(function() {
+        root.innerHTML = '<p class="embedding-demo__copy">The embedding demo could not be loaded.</p>';
+    });
+}
+
 $(document).ready(function() {
     // Check for click events on the navbar burger icon
 
@@ -160,8 +390,9 @@ $(document).ready(function() {
 
 		// Initialize all div with carousel class
     var carousels = bulmaCarousel.attach('.carousel', options);
-	
+		
     bulmaSlider.attach();
     initSteerabilityDemo();
+    initEmbeddingSpaceDemo();
 
 })
