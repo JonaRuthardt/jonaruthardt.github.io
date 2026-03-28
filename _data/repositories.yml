@@ -2,6 +2,7 @@ github_users:
   - JonaRuthardt
 
 github_repos:
+  - JonaRuthardt/ShareLock
+  - JonaRuthardt/SteerViT
   - JonaRuthardt/SocraticImageGeneration
   - JonaRuthardt/HOME-Heuristic-Optimization-for-Model-Engineers-Dashboard
-  - JonaRuthardt/MLRC-CartoonX

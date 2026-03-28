@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriately as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+<meta name="description" content="We introduce Steerable Visual Representations, a new class of visual representations whose global and local features can be steered with natural language. SteerViT injects text into any pretrained ViT via lightweight cross-attention, preserving representation quality while producing task-specific features and enabling effective zero-shot transfer.">
+
+<meta property="og:title" content="SteerViT: Steerable Visual Representations"/>
+<meta property="og:description" content="A vision-centric framework for steering global and local visual features with natural language by conditioning a any pretrained ViT through lightweight cross-attention."/>
+<meta property="og:url" content="https://jonaruthardt.github.io/project/SteerViT/"/>
+<meta property="og:image" content="static/images/SteerViT.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+
+<meta name="twitter:title" content="SteerViT: Steerable Visual Representations">
+<meta name="twitter:description" content="Steer global and local visual features with natural language using a lightweight, vision-centric framework built on any pretrained ViT.">
+<meta name="twitter:image" content="static/images/SteerViT-Twitter.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<meta name="keywords" content="SteerViT, Steerable Visual Representations, steerable vision transformers, text-conditioned visual representations, vision transformers, early fusion, cross-attention, multimodal representation learning, semantic steering, zero-shot transfer">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <title>SteerViT: Steerable Visual Representations</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📸</text></svg>">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+<body>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">SteerViT: Steerable Visual Representations</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="https://jonaruthardt.github.io" target="_blank">Jona Ruthardt</a><sup>1,*</sup>,</span>
+                <span class="author-block">
+                  <a href="https://manugaurdl.github.io" target="_blank">Manu Gaur</a><sup>2,*</sup>,</span>
+                <span class="author-block">
+                  <a href="https://www.cs.cmu.edu/~deva/" target="_blank">Deva Ramanan</a><sup>2</sup>,</span>
+                  <span class="author-block">
+                    <a href="https://scholar.google.com/citations?user=rJotb-YAAAAJ" target="_blank">Makarand Tapaswi</a><sup>3,†</sup>,</span>
+                    <span class="author-block">
+                      <a href="https://yukimasano.github.io" target="_blank">Yuki M. Asano</a><sup>1,†</sup>
+                    </span>
+                    </span>
+                  </span>
+                  </div>
+
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block">
+                      <sup>1</sup>University of Technology Nuremberg<br>
+                      <sup>2</sup>Carnegie Mellon University<br>
+                      <sup>3</sup>International Institute of Information Technology, Hyderabad<br>
+                    </span>
+                  </div>
+
+                  <div class="is-size-6 publication-authors">
+                    <sup>*</sup>Equal contribution &emsp;|&emsp; <sup>†</sup>Equal advising
+                  </div>
+
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                         <!-- Arxiv PDF link -->
+                      <span class="link-block">
+                        <a href="https://arxiv.org/pdf/2410.07173.pdf" target="_blank"
+                        class="external-link button is-normal is-rounded is-dark">
+                        <span class="icon">
+                          <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>Paper</span>
+                      </a>
+                    </span>
+
+                    <!-- Supplementary PDF link -->
+                    <!-- <span class="link-block">
+                      <a href="static/pdfs/supplementary_material.pdf" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Supplementary</span>
+                    </a>
+                  </span> -->
+
+                  <!-- ArXiv abstract Link -->
+                  <span class="link-block">
+                    <a href="https://arxiv.org/abs/2410.07173" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+
+                  <!-- Github link -->
+                  <span class="link-block">
+                    <a href="https://github.com/JonaRuthardt/SteerViT" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+
+              <span class="link-block">
+                <a href="https://colab.research.google.com/drive/1Lf-95znqXaWUGyY9bPeJQI9Eq7yBcpFl?usp=sharing" target="_blank"
+                class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                  <i class="fas fa-laptop-code"></i>
+                </span>
+                <span>Demo</span>
+              </a>
+            </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TL;DR Section -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">TL;DR</h2>
+        <div class="content has-text-justified">
+          <p>
+            We introduce <b>Steerable Visual Representations</b>, a new class of visual representations whose global and local features can be steered with natural language.
+            Our <b>SteerViT</b> method turns any pretrained Vision Transformer into a <b>query-aware visual encoder</b> by injecting text directly into the layers of the visual encoder via lightweight gated cross-attention.
+            The result is a <b>vision-centric multimodal representation</b> that can focus on the object, attribute, or abstraction you care about, while remaining useful for transfer.
+          </p>
+          <p>
+            Across conditional retrieval, targeted attention, personalized object discrimination, and industrial anomaly segmentation, SteerViT shows that language can guide <i>what vision encodes</i> without giving up the strengths of pretrained visual representations.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Hero Figure -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <figure class="has-text-centered">
+          <img src="static/images/figure1.png" alt="SteerViT teaser figure" style="max-width: 100%; height: auto;">
+          <figcaption>
+            <b>Figure 1: Steerable Visual Representations.</b><br>
+            A standard vision encoder tends to represent the dominant concept in an image.
+            SteerViT instead lets language steer both global semantics and local attention toward the queried concept.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why This Matters -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Why Steerable Visual Representations?</h2>
+        <div class="content has-text-justified">
+          <p>
+            Pretrained ViTs such as DINOv2 provide strong generic visual features, but they are typically <b>query-agnostic</b>:
+            without any extra input, they tend to encode the most prominent object or scene in the image.
+            This is useful for general-purpose vision, but limiting for tasks that require focusing on a less salient object, a specific attribute, or a different level of semantic abstraction.
+          </p>
+          <p>
+            Existing multimodal systems do not fully solve this problem.
+            Cross-modal encoders usually fuse text <i>after</i> visual encoding, so the visual backbone itself is still not steerable.
+            MLLMs are more flexible, but their representations are often language-centric and come with much higher computational cost.
+          </p>
+          <p>
+            SteerViT takes a different route: instead of conditioning language on vision, it <b>conditions vision on language</b>.
+            The goal is not just to produce the right answer for one downstream task, but to create a new class of prompt-aware visual representations that remain broadly useful.
+          </p>
+        </div>
+
+        <figure class="has-text-centered" style="margin-top: 2rem;">
+          <img src="static/images/steervit_pareto.png" alt="Steerability versus representation quality" style="max-width: 90%; height: auto; display: block; margin-left: auto; margin-right: auto;">
+          <figcaption>
+            <b>Figure 2: Steerability vs. representation quality.</b><br>
+            While prior approaches often trade off these two properties, SteerViT occupies a more favorable region.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Key Insights -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-4 has-text-centered">Key Insights</h2>
+
+        <div class="columns is-variable is-4">
+          <div class="column">
+            <div class="box" style="height: 100%;">
+              <h3 class="title is-5">🎯 Query-Aware Vision</h3>
+              <p>
+                SteerViT makes visual representations adapt to the prompt:
+                language changes <b>what is encoded</b>, <b>where attention goes</b>, and <b>which semantic granularity</b> the representation emphasizes.
+              </p>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="box" style="height: 100%;">
+              <h3 class="title is-5">🧠 Early Fusion in a Frozen ViT</h3>
+              <p>
+                Instead of adding text only after visual encoding, SteerViT injects language directly into intermediate ViT features through lightweight gated cross-attention blocks.
+              </p>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="box" style="height: 100%;">
+              <h3 class="title is-5">🌍 Strong Transfer</h3>
+              <p>
+                The learned representations do not just steer attention in toy examples.
+                They remain useful for downstream vision tasks and transfer zero-shot to new domains.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Method Section -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-vcentered is-variable is-6">
+      <div class="column is-half">
+        <h2 class="title is-3 has-text-centered">How SteerViT Works</h2>
+        <div class="content has-text-justified">
+          <p>
+            <b>1. Start from any pretrained ViT.</b><br>
+            All original parameters remain frozen, preserving the structure and strengths of the pretrained visual backbone.
+          </p>
+          <p>
+            <b>2. Inject language into visual processing.</b><br>
+            SteerViT interleaves lightweight cross-attention blocks within the ViT to enable visual tokens to attend to text tokens.
+            A zero-initialized tanh gate ensures the model starts exactly as the original frozen ViT and only gradually incorporates language during training.
+          </p>
+          <p>
+            <b>3. Training with referential grounding.</b><br>
+            We use a patch-wise referential segmentation objective that requires the model to indicate which regions correspond to the prompt.
+            This encourages the model to learn how to steer the visual representation toward the queried concept, rather than just adding extra information at the output level.
+            <!-- This encourages prompt information to be written into patch features, and ultimately into the global image representation. -->
+          </p>
+        </div>
+      </div>
+
+      <div class="column is-half">
+        <figure class="has-text-centered">
+          <img src="static/images/training_architecture.pdf" alt="SteerViT architecture diagram" style="max-width: 70%; height: auto; display: block; margin-left: auto; margin-right: auto;">
+          <figcaption>
+            <b>Figure 3: SteerViT architecture.</b><br>
+            Text is injected into a frozen ViT via lightweight gated cross-attention, trained with a patch-level grounding objective.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Steering Semantics -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Steering Global Semantics with Text</h2>
+        <div class="content has-text-justified">
+          <p>
+            To test whether global image features can really be redirected by text, we introduce <b>CORE</b>, a conditional retrieval benchmark built around small, scene-dependent objects placed into cluttered scenes.
+          </p>
+          <p>
+            SteerViT reaches <b>95.9% acc@1</b> on CORE, compared to <b>43.5%</b> for DINOv2.
+            This shows that text conditioning can shift the representation from the dominant scene concept (e.g., “kitchen”) toward the actual object of interest (e.g., “fruit bowl”).
+          </p>
+        </div>
+
+        <figure class="has-text-centered">
+          <img src="static/images/core_qualitative_objects_scatter.jpg" alt="CORE benchmark results" style="max-width: 90%; height: auto; display: block; margin-left: auto; margin-right: auto;">
+          <figcaption>
+            <b>Figure 4: CORE benchmark.</b><br>
+            DINOv2 clusters by scene; SteerViT reorganizes the embedding space around the queried concept.
+          </figcaption>
+        </figure>
+
+        <figure class="has-text-centered" style="margin-top: 2rem;">
+          <img src="static/images/core_qualitative_retrieval_comparison_kitchen_white.png" alt="Qualitative CORE retrieval examples" style="max-width: 100%; height: auto;">
+          <figcaption>
+            <b>Figure 5: Qualitative retrieval on CORE.</b><br>
+            Even when the queried object is small and visually secondary, SteerViT retrieves images that contain the correct object rather than only matching the scene.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Attention Section -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-vcentered is-variable is-6">
+      <div class="column is-half">
+        <h2 class="title is-3 has-text-centered">Text Enables Targeted Attention</h2>
+        <div class="content has-text-justified">
+          <p>
+            Steerability is not only visible in nearest-neighbor retrieval.
+            It also changes how the model aggregates information.
+          </p>
+          <p>
+            On the <b>MOSAIC</b> benchmark, where four images are stitched into a single composite image, SteerViT redirects the frozen [CLS] attention toward prompt-relevant regions.
+            DINOv2 still focuses on the most salient objects, while SteerViT can attend to small or non-dominant targets.
+          </p>
+          <p>
+            Quantitatively, this raises attention localization from <b>14.3</b> to <b>42.5 PR-AUC</b>.
+          </p>
+        </div>
+      </div>
+
+      <div class="column is-half">
+        <figure class="has-text-centered">
+          <img src="static/images/mosaic.jpg " alt="MOSAIC attention maps" style="max-width: 100%; height: auto;">
+          <figcaption>
+            <b>Figure 6: Prompt-guided attention steering.</b><br>
+            The prompt changes where the global representation gathers evidence from.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Granularity Section -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Text Controls Semantic Granularity</h2>
+        <div class="content has-text-justified">
+          <p>
+            SteerViT is not limited to choosing between different objects in a scene.
+            It can also use language to control <b>how detailed</b> the visual representation should be.
+          </p>
+          <p>
+            On <b>PODS</b>, coarse prompts such as category names are often insufficient for fine-grained instance discrimination.
+            More descriptive prompts progressively improve performance, reaching <b>58.3% PR-AUC</b> and strong retrieval quality.
+          </p>
+          <p>
+            In other words, the prompt does not merely add extra information at the output level.
+            It actively reshapes the visual feature space to match the level of specificity described in language.
+          </p>
+        </div>
+
+        <figure class="has-text-centered">
+          <img src="static/images/pods_granularity.png" alt="Prompt specificity and PODS results" style="max-width: 100%; height: auto;">
+          <figcaption>
+            <b>Figure 7: Prompt specificity controls feature granularity.</b><br>
+            Detailed prompts produce more discriminative personalized visual representations.
+          </figcaption>
+        </figure>
+
+        <figure class="has-text-centered" style="margin-top: 2rem;">
+          <img src="static/images/embedding_topology.png" alt="Embedding topology steering" style="max-width: 100%; height: auto;">
+          <figcaption>
+            <b>Figure 8: Steering embedding topology via text.</b><br>
+            Prompts can reorganize the feature space by semantic hierarchy or even by compositional attributes such as “eye”.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Transfer Section -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-vcentered is-variable is-6">
+      <div class="column is-half">
+        <h2 class="title is-3 has-text-centered">Zero-Shot Transfer to New Domains</h2>
+        <div class="content has-text-justified">
+          <p>
+            The value of steerable visual representations is not only that they are controllable, but that they remain useful far beyond the training setup.
+          </p>
+          <p>
+            SteerViT transfers zero-shot to <b>industrial anomaly segmentation</b>, despite never being trained on those target domains.
+            With prompts such as “the anomaly in the object”, we can repurpose the learned linear segmentation head to localize subtle defects.
+          </p>
+          <p>
+            On <b>MVTec AD</b>, SteerViT reaches <b>79.8 PRO</b>, matching or approaching dedicated zero-shot anomaly segmentation methods.
+          </p>
+        </div>
+      </div>
+
+      <div class="column is-half">
+        <figure class="has-text-centered">
+          <img src="static/images/anomaly_segmentation.jpg" alt="SteerViT anomaly segmentation examples" style="max-width: 100%; height: auto;">
+          <figcaption>
+            <b>Figure 9: Zero-shot anomaly segmentation.</b><br>
+            Prompt-conditioned segmentation maps are suitable for visual industrial inspection without task-specific training.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trade-off / Knob Section -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-vcentered is-variable is-6">
+      <div class="column is-half">
+        <div class="steer-demo" id="steer-knob-demo">
+          <div class="steer-demo__controls">
+            <div class="steer-demo__field">
+              <label class="steer-demo__label" for="steer-demo-base-select">Base image</label>
+              <div class="select is-fullwidth is-rounded">
+                <select id="steer-demo-base-select"></select>
+              </div>
+            </div>
+            <div class="steer-demo__field">
+              <label class="steer-demo__label" for="steer-demo-prompt-select">Text prompt</label>
+              <div class="select is-fullwidth is-rounded">
+                <select id="steer-demo-prompt-select"></select>
+              </div>
+            </div>
+          </div>
+
+          <div class="steer-demo__stage" id="steer-demo-stage">
+            <img id="steer-demo-frame-image" class="steer-demo__image" alt="Gate steering demo image">
+          </div>
+
+          <div class="steer-demo__slider-row">
+            <label class="steer-demo__label" for="steer-demo-slider">Steering factor</label>
+            <span class="steer-demo__value" id="steer-demo-slider-value">1.0</span>
+          </div>
+          <input id="steer-demo-slider" class="slider is-fullwidth is-circle" step="1" min="0" max="10" value="10" type="range">
+          <div class="steer-demo__endpoints">
+            <button class="steer-demo__endpoint" id="steer-demo-endpoint-left" type="button">Vanilla DINOv2</button>
+            <button class="steer-demo__endpoint" id="steer-demo-endpoint-right" type="button">SteerViT</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="column is-half">
+        <h2 class="title is-3 has-text-centered">A Continuous Steerability–Quality Knob</h2>
+        <div class="content has-text-justified">
+          <p>
+            The tanh-gated cross-attention layers do more than stabilize training.
+            They also provide a useful post-hoc control knob at inference time.
+          </p>
+          <p>
+            By scaling the learned gates with a continous <b>steering factor</b>, SteerViT can interpolate between the original frozen ViT behavior and the fully text-conditioned representation.
+          </p>
+          <p>
+            In practice, this yields a smooth Pareto frontier and allows one model to serve different operating regimes.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero is-light" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+
+        <h2 class="title">📜 BibTeX</h2>
+        <pre><code>@article{ruthardt2026steervit,
+      title={Steerable Visual Representations},
+      author={Jona Ruthardt and Manu Gaur and Deva Ramanan and Makarand Tapaswi and Yuki M. Asano},
+      journal={Arxiv},
+      year={2026}
+    }</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container is-max-desktop">
+    <!-- <div class="columns is-centered"> -->
+      <!-- <div class="column is-four-fifths"> -->
+        <div class="content">
+
+          <p style="color: gray;">
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" style="color: gray;">Academic Project Page Template</a>.
+            <br> This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" style="color: gray;">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+        </div>
+      <!-- </div>
+    </div> -->
+  </div>
+</footer>
+
+</body>
+</html>
