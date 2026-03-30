@@ -157,6 +157,9 @@
             The result is a <b>vision-centric multimodal representation</b> that can focus on the object, attribute, or abstraction you care about, while remaining useful for transfer.
           </p>
           <p>
+            Given an image and a text query, SteerViT produces <b>prompt-conditioned local and global visual features</b> by steering the vision encoder itself, rather than only fusing text after visual encoding.
+          </p>
+          <p>
             Across conditional retrieval, targeted attention, personalized object discrimination, and industrial anomaly segmentation, SteerViT shows that language can guide <i>what vision encodes</i> without giving up the strengths of pretrained visual representations.
           </p>
         </div>
@@ -168,6 +171,7 @@
 <!-- Hero Figure -->
 <section class="section hero">
   <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Why Steerable Visual Representations?</h2>
     <div class="teaser-demo" id="teaser-figure-demo" data-default-scene="Street" data-default-prompt="car">
       <div class="teaser-demo__controls">
         <div class="teaser-demo__field">
@@ -247,7 +251,6 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3 has-text-centered">Why Steerable Visual Representations?</h2>
         <div class="content has-text-justified">
           <p>
             Pretrained ViTs such as DINOv2 provide strong generic visual features, but they are typically <b>query-agnostic</b>:
@@ -259,21 +262,26 @@
             Cross-modal encoders usually fuse text <i>after</i> visual encoding, so the visual backbone itself is still not steerable.
             MLLMs are more flexible, but their representations are often language-centric and come with much higher computational cost.
           </p>
+          <!-- <p> -->
+            <!-- In other words, many CLIP-style or late-fusion systems let text influence the final prediction, but not the visual features produced by the encoder itself. -->
+          <!-- </p> -->
           <p>
             SteerViT takes a different route: instead of conditioning language on vision, it <b>conditions vision on language</b>.
             The goal is not just to produce the right answer for one downstream task, but to create a new class of prompt-aware visual representations that remain broadly useful.
           </p>
         </div>
-
-        <figure class="has-text-centered" style="margin-top: 2rem;">
-          <img src="static/images/steervit_pareto.png" alt="Steerability versus representation quality" style="max-width: 90%; height: auto; display: block; margin-left: auto; margin-right: auto;">
-          <figcaption>
-            <b>Figure 2: Steerability vs. representation quality.</b><br>
-            While prior approaches often trade off these two properties, SteerViT occupies a more favorable region.
-          </figcaption>
-        </figure>
       </div>
     </div>
+  </div>
+
+  <div class="container is-max-widescreen">
+    <figure class="has-text-centered" style="margin-top: 2rem;">
+      <img src="static/images/pareto_plot.pdf" alt="Steerability versus representation quality" style="max-width: 100%; height: auto; display: block; margin-left: auto; margin-right: auto;">
+      <figcaption style="max-width: 760px; margin: 0.75rem auto 0;">
+        <b>Figure 1: Steerability vs. representation quality.</b><br>
+        While prior approaches often trade off these two properties, SteerViT achieves a new Pareto frontier by offering high steerability while retaining representation quality.
+      </figcaption>
+    </figure>
   </div>
 </section>
 
@@ -282,34 +290,32 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-4 has-text-centered">Key Insights</h2>
+        <h2 class="title is-4 has-text-centered">Core Contributions</h2>
 
         <div class="columns is-variable is-4">
           <div class="column">
             <div class="box" style="height: 100%;">
-              <h3 class="title is-5">🎯 Query-Aware Vision</h3>
+              <h3 class="title is-5">Steerable Visual Representations</h3>
               <p>
-                SteerViT makes visual representations adapt to the prompt:
-                language changes <b>what is encoded</b>, <b>where attention goes</b>, and <b>which semantic granularity</b> the representation emphasizes.
+                Language changes both <b>where the model attends</b> and <b>what the global representation encodes</b>, including the semantic granularity and grouping principle of the learned features.
               </p>
             </div>
           </div>
 
           <div class="column">
             <div class="box" style="height: 100%;">
-              <h3 class="title is-5">🧠 Early Fusion in a Frozen ViT</h3>
+              <h3 class="title is-5">Lightweight Conditioning of Frozen ViTs</h3>
               <p>
-                Instead of adding text only after visual encoding, SteerViT injects language directly into intermediate ViT features through lightweight gated cross-attention blocks.
+                SteerViT turns any pretrained ViT into a query-aware encoder through lightweight gated cross-attention, adding only <b>20M multimodal parameters</b>. 
               </p>
             </div>
           </div>
 
           <div class="column">
             <div class="box" style="height: 100%;">
-              <h3 class="title is-5">🌍 Strong Transfer</h3>
+              <h3 class="title is-5">Steering Without Sacrificing Utility</h3>
               <p>
-                The learned representations do not just steer attention in toy examples.
-                They remain useful for downstream vision tasks and transfer zero-shot to new domains.
+                The resulting representations remain broadly useful, supporting retrieval, targeted attention, semantic control, and zero-shot transfer to new downstream domains.
               </p>
             </div>
           </div>
@@ -348,7 +354,7 @@
         <figure class="has-text-centered">
           <img src="static/images/training_architecture.pdf" alt="SteerViT architecture diagram" style="max-width: 70%; height: auto; display: block; margin-left: auto; margin-right: auto;">
           <figcaption>
-            <b>Figure 3: SteerViT architecture.</b><br>
+            <b>Figure 2: SteerViT architecture.</b><br>
             Text is injected into a frozen ViT via lightweight gated cross-attention, trained with a patch-level grounding objective.
           </figcaption>
         </figure>
@@ -376,7 +382,7 @@
         <figure class="has-text-centered">
           <img src="static/images/core_qualitative_objects_scatter.jpg" alt="CORE benchmark results" style="max-width: 90%; height: auto; display: block; margin-left: auto; margin-right: auto;">
           <figcaption>
-            <b>Figure 4: CORE benchmark.</b><br>
+            <b>Figure 3: CORE benchmark.</b><br>
             DINOv2 clusters by scene; SteerViT reorganizes the embedding space around the queried concept.
           </figcaption>
         </figure>
@@ -384,7 +390,7 @@
         <figure class="has-text-centered" style="margin-top: 2rem;">
           <img src="static/images/core_qualitative_retrieval_comparison_kitchen_white.png" alt="Qualitative CORE retrieval examples" style="max-width: 100%; height: auto;">
           <figcaption>
-            <b>Figure 5: Qualitative retrieval on CORE.</b><br>
+            <b>Figure 4: Qualitative retrieval on CORE.</b><br>
             Even when the queried object is small and visually secondary, SteerViT retrieves images that contain the correct object rather than only matching the scene.
           </figcaption>
         </figure>
@@ -418,7 +424,7 @@
         <figure class="has-text-centered">
           <img src="static/images/mosaic.jpg " alt="MOSAIC attention maps" style="max-width: 100%; height: auto;">
           <figcaption>
-            <b>Figure 6: Prompt-guided attention steering.</b><br>
+            <b>Figure 5: Prompt-guided attention steering.</b><br>
             The prompt changes where the global representation gathers evidence from.
           </figcaption>
         </figure>
@@ -495,7 +501,7 @@
         <figure class="has-text-centered">
           <img src="static/images/anomaly_segmentation.jpg" alt="SteerViT anomaly segmentation examples" style="max-width: 100%; height: auto;">
           <figcaption>
-            <b>Figure 9: Zero-shot anomaly segmentation.</b><br>
+            <b>Figure 6: Zero-shot anomaly segmentation.</b><br>
             Prompt-conditioned segmentation maps are suitable for visual industrial inspection without task-specific training.
           </figcaption>
         </figure>
