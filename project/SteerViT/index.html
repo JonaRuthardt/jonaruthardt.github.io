@@ -306,7 +306,7 @@
             <div class="box" style="height: 100%;">
               <h3 class="title is-5">Lightweight Conditioning of Frozen ViTs</h3>
               <p>
-                SteerViT turns any pretrained ViT into a query-aware encoder through lightweight gated cross-attention, adding only <b>20M multimodal parameters</b>. 
+                SteerViT turns any pretrained ViT into a query-aware encoder through lightweight gated cross-attention, adding only <b>21M multimodal parameters</b>. 
               </p>
             </div>
           </div>
@@ -374,7 +374,7 @@
             To test whether global image features can really be redirected by text, we introduce <b>CORE</b>, a conditional retrieval benchmark built around small, scene-dependent objects placed into cluttered scenes.
           </p>
           <p>
-            SteerViT reaches <b>95.9% acc@1</b> on CORE, compared to <b>43.5%</b> for DINOv2.
+            SteerViT reaches <b>96.0% acc@1</b> on CORE, compared to <b>43.7%</b> for DINOv2.
             This shows that text conditioning can shift the representation from the dominant scene concept (e.g., “kitchen”) toward the actual object of interest (e.g., “fruit bowl”).
           </p>
         </div>
@@ -415,7 +415,7 @@
             DINOv2 still focuses on the most salient objects, while SteerViT can attend to small or non-dominant targets.
           </p>
           <p>
-            Quantitatively, this raises attention localization from <b>14.3</b> to <b>42.5 PR-AUC</b>.
+            Quantitatively, this raises attention localization from <b>14.3</b> to <b>50.2 PR-AUC</b>.
           </p>
         </div>
       </div>
@@ -492,7 +492,7 @@
             With prompts such as “the anomaly in the object”, we can repurpose the learned linear segmentation head to localize subtle defects.
           </p>
           <p>
-            On <b>MVTec AD</b>, SteerViT reaches <b>79.8 PRO</b>, matching or approaching dedicated zero-shot anomaly segmentation methods.
+            On <b>MVTec AD</b>, SteerViT reaches <b>82.1 PRO</b>, matching or approaching dedicated zero-shot anomaly segmentation methods.
           </p>
         </div>
       </div>
@@ -573,12 +573,12 @@
       <div class="column is-four-fifths">
 
         <h2 class="title">📜 BibTeX</h2>
-        <pre><code>@article{ruthardt2026steervit,
-      title={Steerable Visual Representations},
+        <pre><code>@misc{ruthardt2026steervit,
+      title={Steerable Visual Representations}, 
       author={Jona Ruthardt and Manu Gaur and Deva Ramanan and Makarand Tapaswi and Yuki M. Asano},
-      journal={Arxiv},
+      journal={arXiv:2604.02327},
       year={2026}
-    }</code></pre>
+}</code></pre>
       </div>
     </div>
   </div>
