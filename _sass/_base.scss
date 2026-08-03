@@ -467,6 +467,63 @@ footer.sticky-bottom {
   }
 }
 
+.repo {
+  width: 100%;
+
+  .repository-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 11rem;
+    padding: 1.25rem;
+    color: var(--global-text-color);
+    text-align: left;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 0.25rem;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      color: var(--global-text-color);
+      text-decoration: none;
+      border-color: var(--global-theme-color);
+      transform: translateY(-2px);
+    }
+  }
+
+  .repository-card-title {
+    margin-bottom: 0.5rem;
+    color: var(--global-theme-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  .repository-card-description {
+    flex-grow: 1;
+    color: var(--global-text-color-light);
+    font-size: 0.95rem;
+  }
+
+  .repository-card-meta,
+  .repository-card-link {
+    display: flex;
+    gap: 0.9rem;
+    margin-top: 1rem;
+    color: var(--global-text-color-light);
+    font-size: 0.85rem;
+  }
+
+  .repository-card-meta .fa-circle {
+    color: var(--global-theme-color);
+    font-size: 0.65em;
+  }
+
+  .profile-card .fab {
+    margin-bottom: 0.75rem;
+    color: var(--global-theme-color);
+  }
+}
+
 // Blog
 
 .header-bar {
@@ -735,6 +792,15 @@ footer.sticky-bottom {
       }
 
       .links {
+        .publication-highlight {
+          display: inline-block;
+          color: #b00020;
+          border: 2px solid currentColor;
+          padding: 0.1em 0.35em;
+          margin-left: 0.25rem;
+          line-height: 1.2;
+        }
+
         a.btn {
           color: var(--global-text-color);
           border: 1px solid var(--global-text-color);
