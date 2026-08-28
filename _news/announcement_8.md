@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Our [SteerViT paper](https://jonaruthardt.github.io/project/SteerViT/) got accepted at ECCV 2026 as an Oral! 🎊
+Our [SteerViT paper](https://jonaruthardt.github.io/project/SteerViT/) got accepted at ECCV 2026 as an Oral (top 1%)! 🎊
