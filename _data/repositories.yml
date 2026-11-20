@@ -2,23 +2,26 @@ github_users:
   - JonaRuthardt
 
 github_repos:
+  - name: OpenVisionBanana
+    owner: OpenVisionBanana
+    description: An open recipe for adapting image generators to visual perception, generation, and editing.
+    language: Python
+    stars: 116
+    forks: 8
+  - name: MissionBench
+    owner: FraunhoferIVI
+    description: Zero-shot mission-level evaluation for aerial MLLM agents.
+    language: Python
+    stars: 6
+    forks: 1
   - name: SteerViT
+    owner: manugaurdl
     description: SteerViT equips any ViT with the ability to steer global and local visual representations using natural language.
     language: Python
-    stars: 25
-    forks: 0
+    stars: 163
+    forks: 11
   - name: ShareLock
     description: Official implementation of ShareLock, an ultra-lightweight CLIP-like vision-language model.
     language: Python
-    stars: 7
-    forks: 0
-  - name: SocraticImageGeneration
-    description: Optimizing image generation using the notion of Socratic Models.
-    language: Jupyter Notebook
-    stars: 6
-    forks: 2
-  - name: HOME-Heuristic-Optimization-for-Model-Engineers-Dashboard
-    description: Dashboard project developed for the Multimedia Analytics course at the University of Amsterdam.
-    language: Python
-    stars: 0
+    stars: 8
     forks: 0

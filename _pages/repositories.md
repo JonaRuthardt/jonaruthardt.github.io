@@ -36,8 +36,9 @@ nav_order: 4
 ## Highlighted GitHub Repositories
 
 {% if site.data.repositories.github_repos %}
+{% assign repositories_by_stars = site.data.repositories.github_repos | sort: "stars" | reverse %}
 <div class="repositories d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center">
-  {% for repo in site.data.repositories.github_repos %}
+  {% for repo in repositories_by_stars %}
     {% include repository/repo.html repository=repo %}
   {% endfor %}
 </div>
